@@ -21,6 +21,7 @@
 #ifndef LucyRTL8125_linux_h
 #define LucyRTL8125_linux_h
 
+#include "LucyRTL8125Ethernet-Prefix.h"
 #include <IOKit/IOLib.h>
 
 /******************************************************************************/

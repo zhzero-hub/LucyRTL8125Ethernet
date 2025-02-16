@@ -24,6 +24,8 @@
 
 bool LucyRTL8125::initPCIConfigSpace(IOPCIDevice *provider)
 {
+    DebugLog("initPCIConfigSpace() ===>\n");
+    printf("LucyRTL8125: initPCIConfigSpace() ===>\n");
     IOByteCount pmCapOffset;
     UInt32 pcieLinkCap;
     UInt16 pcieLinkCtl;
@@ -48,7 +50,7 @@ bool LucyRTL8125::initPCIConfigSpace(IOPCIDevice *provider)
         }
         pciPMCtrlOffset = pmCapOffset + kIOPCIPMControl;
     } else {
-        IOLog("PCI power management unsupported.\n");
+        DebugLog("PCI power management unsupported.\n");
     }
     provider->enablePCIPowerManagement(kPCIPMCSPowerStateD0);
     

@@ -19,7 +19,7 @@
 */
 
 #include <IOKit/IODMACommand.h>
-
+#include <os/log.h>
 #include "LucyRTL8125Linux-900501.hpp"
 
 #ifdef DEBUG
@@ -192,6 +192,7 @@ typedef struct RtlStatData {
 #define kMCFilterLimit  32
 #define kMaxMtu 9000
 #define kMaxPacketSize (kMaxMtu + ETH_HLEN + ETH_FCS_LEN)
+#define kMinPacketSize (1)
 
 /* statitics timer period in ms. */
 #define kTimeoutMS 1000
@@ -272,9 +273,9 @@ public:
     virtual IOReturn enable(IONetworkInterface *netif) override;
     virtual IOReturn disable(IONetworkInterface *netif) override;
     
-    virtual IOReturn outputStart(IONetworkInterface *interface, IOOptionBits options ) override;
-    virtual IOReturn setInputPacketPollingEnable(IONetworkInterface *interface, bool enabled) override;
-    virtual void pollInputPackets(IONetworkInterface *interface, uint32_t maxCount, IOMbufQueue *pollQueue, void *context) override;
+    virtual IOReturn outputStart(IONetworkInterface *interface, IOOptionBits options );
+    virtual IOReturn setInputPacketPollingEnable(IONetworkInterface *interface, bool enabled);
+    virtual void pollInputPackets(IONetworkInterface *interface, uint32_t maxCount, IOMbufQueue *pollQueue, void *context);
     
     virtual void getPacketBufferConstraints(IOPacketBufferConstraints *constraints) const override;
     
@@ -304,6 +305,8 @@ public:
     virtual IOReturn setMaxPacketSize(UInt32 maxSize) override;
     
 private:
+    // IONetworkInterface* createInterface() override;
+
     bool initPCIConfigSpace(IOPCIDevice *provider);
     static IOReturn setPowerStateWakeAction(OSObject *owner, void *arg1, void *arg2, void *arg3, void *arg4);
     static IOReturn setPowerStateSleepAction(OSObject *owner, void *arg1, void *arg2, void *arg3, void *arg4);

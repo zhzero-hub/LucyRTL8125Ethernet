@@ -38,6 +38,8 @@ bool LucyRTL8125::init(OSDictionary *properties)
     bool result;
     
     result = super::init(properties);
+    os_log_error(OS_LOG_DEFAULT, "LucyRTL8125: This is a debug message");
+    // printf("LucyRTL8125: This is a debug message\n");
     
     if (result) {
         workLoop = NULL;
@@ -143,6 +145,8 @@ void LucyRTL8125::free()
 
 bool LucyRTL8125::start(IOService *provider)
 {
+    DebugLog("LucyRTL8125: start() ===>\n");
+    printf("LucyRTL8125: start() ===>\n");
     bool result;
     
     result = super::start(provider);
@@ -294,9 +298,15 @@ static IOPMPowerState powerStateArray[kPowerStateCount] =
     {1, kIOPMDeviceUsable, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
+// IONetworkInterface* LucyRTL8125::createInterface()
+// {
+//     return nullptr;
+// }
+
 IOReturn LucyRTL8125::registerWithPolicyMaker(IOService *policyMaker)
 {
     DebugLog("registerWithPolicyMaker() ===>\n");
+    printf("LucyRTL8125: registerWithPolicyMaker() ===>\n");
     
     powerState = kPowerStateOn;
     
@@ -310,6 +320,7 @@ IOReturn LucyRTL8125::setPowerState(unsigned long powerStateOrdinal, IOService *
     IOReturn result = IOPMAckImplied;
     
     DebugLog("setPowerState() ===>\n");
+    printf("LucyRTL8125: setPowerState() ===>\n");
         
     if (powerStateOrdinal == powerState) {
         DebugLog("Already in power state %lu.\n", powerStateOrdinal);
@@ -333,6 +344,7 @@ done:
 void LucyRTL8125::systemWillShutdown(IOOptionBits specifier)
 {
     DebugLog("systemWillShutdown() ===>\n");
+    printf("LucyRTL8125: systemWillShutdown() ===>\n");
     
     if ((kIOMessageSystemWillPowerOff | kIOMessageSystemWillRestart) & specifier) {
         disable(netif);
@@ -354,6 +366,7 @@ IOReturn LucyRTL8125::enable(IONetworkInterface *netif)
     IOReturn result = kIOReturnError;
     
     DebugLog("enable() ===>\n");
+    printf("LucyRTL8125: enable() ===>\n");
 
     if (test_bit(__ENABLED, &stateFlags)) {
         DebugLog("Interface already enabled.\n");
@@ -400,6 +413,7 @@ IOReturn LucyRTL8125::disable(IONetworkInterface *netif)
     UInt64 t;
 
     DebugLog("disable() ===>\n");
+    printf("LucyRTL8125: disable() ===>\n");
     
     if (!test_bit(__ENABLED, &stateFlags))
         goto done;
@@ -442,6 +456,8 @@ done:
 
 IOReturn LucyRTL8125::outputStart(IONetworkInterface *interface, IOOptionBits options )
 {
+    DebugLog("LucyRTL8125::outputStart() ===>\n");
+    printf("LucyRTL8125: LucyRTL8125::outputStart() ===>\n");
     IOPhysicalSegment txSegments[kMaxSegs];
     mbuf_t m;
     RtlTxDesc *desc, *firstDesc;
@@ -790,6 +806,7 @@ IOReturn LucyRTL8125::setMulticastList(IOEthernetAddress *addrs, UInt32 count)
     UInt32 i, bitNumber;
     
     DebugLog("setMulticastList() ===>\n");
+    printf("LucyRTL8125: setMulticastList() ===>\n");
     
     if (count <= kMCFilterLimit) {
         for (i = 0; i < count; i++, addrs++) {
@@ -804,6 +821,7 @@ IOReturn LucyRTL8125::setMulticastList(IOEthernetAddress *addrs, UInt32 count)
     WriteReg32(MAR1, *filterAddr);
 
     DebugLog("setMulticastList() <===\n");
+    printf("LucyRTL8125: setMulticastList() <===\n");
 
     return kIOReturnSuccess;
 }
@@ -1325,10 +1343,9 @@ void LucyRTL8125::interruptHandler(OSObject *client, IOInterruptEventSource *src
 {
     UInt32 packets;
     UInt32 status;
-    
     status = ReadReg32(ISR0_8125);
     
-    //DebugLog("interruptHandler: status = 0x%x.\n", status);
+    DebugLog("interruptHandler: status = 0x%x.\n", status);
 
     /* hotplug/major error/no more work/shared irq */
     if ((status == 0xFFFFFFFF) || !status)
@@ -1346,7 +1363,7 @@ void LucyRTL8125::interruptHandler(OSObject *client, IOInterruptEventSource *src
         /* Rx interrupt */
         if (status & (RxOK | RxDescUnavail)) {
             packets = rxInterrupt(netif, kNumRxDesc, NULL, NULL);
-            
+
             if (packets)
                 netif->flushInputQueue();
             
@@ -1370,10 +1387,10 @@ void LucyRTL8125::interruptHandler(OSObject *client, IOInterruptEventSource *src
             WriteReg32(TIMER_INT0_8125, 0x0000);
             intrMask = intrMaskRxTx;
         }
-#ifdef DEBUG
-        if (status & PCSTimeout)
-            tmrInterrupts++;
-#endif
+// #ifdef DEBUG
+//         if (status & PCSTimeout)
+//             tmrInterrupts++;
+// #endif
         
         clear_bit(__POLLING, &stateFlags);
     }
@@ -1449,7 +1466,7 @@ IOReturn LucyRTL8125::setInputPacketPollingEnable(IONetworkInterface *interface,
 
 void LucyRTL8125::pollInputPackets(IONetworkInterface *interface, uint32_t maxCount, IOMbufQueue *pollQueue, void *context )
 {
-    //DebugLog("pollInputPackets() ===>\n");
+    DebugLog("pollInputPackets() ===>\n");
     
     if (test_bit(__POLL_MODE, &stateFlags) &&
         !test_and_set_bit(__POLLING, &stateFlags)) {
@@ -1693,7 +1710,6 @@ void LucyRTL8125::timerActionRTL8125(IOTimerEventSource *timer)
     
     //IOLog("rxIntr/s: %u, txIntr/s: %u, timerIntr/s: %u\n", rxIntr, txIntr, tmrIntr);
 #endif
-    
     updateStatitics();
 
     if (!test_bit(__LINK_UP, &stateFlags))

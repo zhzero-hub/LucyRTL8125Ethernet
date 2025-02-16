@@ -122,13 +122,13 @@ const struct RTLChipInfo rtl_chip_info[] = {
        0xff7e5880,
        Jumbo_Frame_9k),
     
-    _R("RTL8125B",
+    _R("RTL8125BG",
        CFG_METHOD_4,
        BIT_30 | EnableInnerVlan | EnableOuterVlan | (RX_DMA_BURST << RxCfgDMAShift),
        0xff7e5880,
        Jumbo_Frame_9k),
     
-    _R("RTL8125B",
+    _R("RTL8125BG",
        CFG_METHOD_5,
        BIT_30 | EnableInnerVlan | EnableOuterVlan | (RX_DMA_BURST << RxCfgDMAShift),
        0xff7e5880,

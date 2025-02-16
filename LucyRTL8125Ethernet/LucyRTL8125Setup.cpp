@@ -300,7 +300,12 @@ bool LucyRTL8125::setupRxResources()
     rxPhyAddr = seg.fIOVMAddr;
     
     /* Initialize rxDescArray. */
-    bzero(rxDescArray, kRxDescSize);
+    // bzero(rxDescArray, kRxDescSize);
+    for (i = 0; i < kRxLastDesc; i++) {
+        rxDescArray[i].opts1 = 0;
+        rxDescArray[i].opts2 = 0;
+        rxDescArray[i].addr = 0;
+    }
     rxDescArray[kRxLastDesc].opts1 = OSSwapHostToLittleInt32(RingEnd);
 
     for (i = 0; i < kNumRxDesc; i++) {
@@ -466,7 +471,12 @@ bool LucyRTL8125::setupTxResources()
     txPhyAddr = seg.fIOVMAddr;
     
     /* Initialize txDescArray. */
-    bzero(txDescArray, kTxDescSize);
+    // bzero(txDescArray, kTxDescSize);
+    for (i = 0; i < kTxLastDesc; i++) {
+        txDescArray[i].opts1 = 0;
+        txDescArray[i].opts2 = 0;
+        txDescArray[i].addr = 0;
+    }
     txDescArray[kTxLastDesc].opts1 = OSSwapHostToLittleInt32(RingEnd);
     
     for (i = 0; i < kNumTxDesc; i++) {
@@ -592,7 +602,7 @@ void LucyRTL8125::freeRxResources()
         rxDescDmaCmd = NULL;
     }
     if (rxBufArrayMem) {
-        IOFree(txBufArrayMem, kRxBufArraySize);
+        IOFree(rxBufArrayMem, kRxBufArraySize);
         rxBufArrayMem = NULL;
         rxMbufArray = NULL;
     }
@@ -630,7 +640,9 @@ void LucyRTL8125::freeStatResources()
         statBufDesc->complete();
         statBufDesc->release();
         statBufDesc = NULL;
-        statPhyAddr = (IOPhysicalAddress64)NULL;
+        if (statPhyAddr) {
+            statPhyAddr = (IOPhysicalAddress64)NULL;
+        }
     }
     if (statDescDmaCmd) {
         statDescDmaCmd->clearMemoryDescriptor();

@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "mach_types.h": "c",
+        "__config": "cpp"
+    }
+}
