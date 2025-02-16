@@ -1,0 +1,59 @@
+{
+  "buildCommand" : {
+    "command" : "prepareForIndexing",
+    "enableIndexBuildArena" : false,
+    "targets" : null
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "92df57c17e877258723cd942af8e4d7453d1f64a428cee0d47c838b001595de2"
+    }
+  ],
+  "containerPath" : "/Users/zhzero/Downloads/LucyRTL8125Ethernet/LucyRTL8125Ethernet.xcodeproj",
+  "continueBuildingAfterErrors" : true,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "undefined_arch",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : true,
+      "platform" : "macosx",
+      "sdk" : "macosx15.2",
+      "sdkVariant" : "macos",
+      "supportedArchitectures" : [
+        "arm64",
+        "arm64e",
+        "x86_64",
+        "x86_64h"
+      ],
+      "targetArchitecture" : "undefined_arch"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "",
+      "buildProductsPath" : "",
+      "derivedDataPath" : "/Users/zhzero/Library/Developer/Xcode/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/zhzero/Library/Developer/Xcode/DerivedData/LucyRTL8125Ethernet-flgtzztxbdnhyefynvuixzrynjac/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/zhzero/Library/Developer/Xcode/DerivedData/LucyRTL8125Ethernet-flgtzztxbdnhyefynvuixzrynjac/Index.noindex/PrecompiledHeaders",
+      "pchPath" : ""
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "YES",
+          "ONLY_ACTIVE_ARCH" : "YES"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}

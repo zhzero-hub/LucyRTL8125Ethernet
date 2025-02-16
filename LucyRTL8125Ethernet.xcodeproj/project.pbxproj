@@ -342,7 +342,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.2.1d0;
+				CURRENT_PROJECT_VERSION = 1.2.2;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
@@ -363,10 +363,7 @@
 					/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/Kernel.framework/Versions/A/Headers,
 				);
 				INFOPLIST_FILE = LucyRTL8125Ethernet/Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/MacKernelSDK/Library/x86_64_arm64e",
-					"$(PROJECT_DIR)/MacKernelSDK/Headers",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				MARKETING_VERSION = 1.2.1d0;
 				MODULE_NAME = com.insanelymac.LucyRTL8125;
 				MODULE_VERSION = $CURRENT_PROJECT_VERSION;
@@ -389,7 +386,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.2.1d0;
+				CURRENT_PROJECT_VERSION = 1.2.2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				DRIVERKIT_DEPLOYMENT_TARGET = 24.0;
@@ -410,10 +407,7 @@
 					/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/Kernel.framework/Versions/A/Headers,
 				);
 				INFOPLIST_FILE = LucyRTL8125Ethernet/Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/MacKernelSDK/Library/x86_64_arm64e",
-					"$(PROJECT_DIR)/MacKernelSDK/Headers",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				MARKETING_VERSION = 1.2.1d0;
 				MODULE_NAME = com.insanelymac.LucyRTL8125;
 				MODULE_VERSION = $CURRENT_PROJECT_VERSION;
